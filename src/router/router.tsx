@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import HomePage from "../pages/HomePage";
 import PlanetList from "../pages/PlanetListClassico";
+import CreateBeer from "../pages/CreateBeer";
 
 const router = createBrowserRouter([
   {
@@ -10,6 +11,10 @@ const router = createBrowserRouter([
   {
     path: "/planets",
     element: <PlanetList></PlanetList>,
+  },
+  {
+    path: "/beers/create",
+    element: <CreateBeer></CreateBeer>,
   },
 ]);
 
