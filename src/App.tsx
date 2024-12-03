@@ -17,22 +17,36 @@ type Planet = {
   edited: string;
   url: string;
 };
+
+type PlanetResponse = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Planet[];
+};
+
 function App() {
-  const [refresh, setRefresh] = useState(false);
-  const [planets, setPlanets] = useState<Planet[]>([]);
-  const [page, setPage] = useState(1);
+  const [planets, setPlanets] = useState<PlanetResponse>({
+    count: 0,
+    next: null,
+    previous: null,
+    results: [],
+  });
 
   useEffect(() => {
-    fetch("https://swapi.dev/api/planets?page=" + page)
-      .then((response) => response.json())
-      .then((data) => setPlanets(data.results));
-  }, [refresh, page]);
+    getData("https://swapi.dev/api/planets");
+  }, []);
+
+  const getData = async (url: string) => {
+    const response = await fetch(url);
+    const data = await response.json();
+    setPlanets(data);
+  };
 
   return (
     <div>
       <p>bienvenue</p>
-      <button onClick={() => setRefresh(!refresh)}>Refresh</button>
-      {planets.map((planet) => {
+      {planets.results.map((planet) => {
         return (
           <div key={planet.url}>
             <p>name : {planet.name}</p>
@@ -40,17 +54,12 @@ function App() {
         );
       })}
       <button
-        onClick={() => {
-          setPage(page - 1);
-        }}
+        disabled={!planets.previous}
+        onClick={() => getData(planets.previous!)}
       >
         previous
       </button>
-      <button
-        onClick={() => {
-          setPage(page + 1);
-        }}
-      >
+      <button disabled={!planets.next} onClick={() => getData(planets.next!)}>
         next
       </button>
     </div>
