@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link, useNavigate, useNavigation } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const HomePage = () => {
   const navigation = useNavigate();

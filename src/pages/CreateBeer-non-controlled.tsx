@@ -1,18 +1,18 @@
-import { useRef, useState } from "react";
+import { FormEvent, useRef } from "react";
 
 const CreateBeer = () => {
-  const name = useRef();
-  const degree = useRef();
-  const producer = useRef();
-  const description = useRef();
+  const name = useRef<HTMLInputElement | null>(null);
+  const degree = useRef<HTMLInputElement | null>(null);
+  const producer = useRef<HTMLInputElement | null>(null);
+  const description = useRef<HTMLInputElement | null>(null);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(
-      name.current.value,
-      degree.current.value,
-      producer.current.value,
-      description.current.value
+      name.current?.value,
+      degree.current?.value,
+      producer.current?.value,
+      description.current?.value
     );
   };
 

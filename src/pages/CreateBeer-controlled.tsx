@@ -6,7 +6,7 @@ const CreateBeer = () => {
   const [producer, setProducer] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(name, degree, producer, description);
   };
