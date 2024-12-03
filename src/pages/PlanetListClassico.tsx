@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import "./App.css";
-
 type Planet = {
   name: string;
   rotation_period: string;
@@ -25,7 +23,7 @@ type PlanetResponse = {
   results: Planet[];
 };
 
-function App() {
+function PlanetList() {
   const [planets, setPlanets] = useState<PlanetResponse>({
     count: 0,
     next: null,
@@ -44,7 +42,11 @@ function App() {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        minHeight: "200vh",
+      }}
+    >
       <p>bienvenue</p>
       {planets.results.map((planet) => {
         return (
@@ -66,4 +68,4 @@ function App() {
   );
 }
 
-export default App;
+export default PlanetList;
