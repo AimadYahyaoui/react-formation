@@ -20,12 +20,13 @@ type Planet = {
 function App() {
   const [refresh, setRefresh] = useState(false);
   const [planets, setPlanets] = useState<Planet[]>([]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    fetch("https://swapi.dev/api/planets")
+    fetch("https://swapi.dev/api/planets?page=" + page)
       .then((response) => response.json())
       .then((data) => setPlanets(data.results));
-  }, [refresh]);
+  }, [refresh, page]);
 
   return (
     <div>
@@ -38,8 +39,20 @@ function App() {
           </div>
         );
       })}
-      <button>previous</button>
-      <button>next</button>
+      <button
+        onClick={() => {
+          setPage(page - 1);
+        }}
+      >
+        previous
+      </button>
+      <button
+        onClick={() => {
+          setPage(page + 1);
+        }}
+      >
+        next
+      </button>
     </div>
   );
 }
