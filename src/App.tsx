@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import "./App.css";
+import useFetch from "./hooks/useFetch";
 
 type Planet = {
   name: string;
@@ -26,42 +26,26 @@ type PlanetResponse = {
 };
 
 function App() {
-  const [planets, setPlanets] = useState<PlanetResponse>({
-    count: 0,
-    next: null,
-    previous: null,
-    results: [],
-  });
-
-  useEffect(() => {
-    getData("https://swapi.dev/api/planets");
-  }, []);
-
-  const getData = async (url: string) => {
-    const response = await fetch(url);
-    const data = await response.json();
-    setPlanets(data);
-  };
+  const { loading, error, data } = useFetch<PlanetResponse>(
+    "https://swapi.dev/api/planets"
+  );
 
   return (
     <div>
+      {loading && <p>Loading...</p>}
+      {error && (
+        <div>
+          <p>Error: {error}</p>
+        </div>
+      )}
       <p>bienvenue</p>
-      {planets.results.map((planet) => {
+      {data?.results.map((planet) => {
         return (
           <div key={planet.url}>
             <p>name : {planet.name}</p>
           </div>
         );
       })}
-      <button
-        disabled={!planets.previous}
-        onClick={() => getData(planets.previous!)}
-      >
-        previous
-      </button>
-      <button disabled={!planets.next} onClick={() => getData(planets.next!)}>
-        next
-      </button>
     </div>
   );
 }
