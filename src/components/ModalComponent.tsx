@@ -14,7 +14,7 @@ const ModalComponent = ({
   return (
     <div
       style={{
-        display: isOpen ? "absolute" : "none",
+        display: isOpen ? "block" : "none",
         width: "50vw",
         height: "50vh",
         backgroundColor: "white",

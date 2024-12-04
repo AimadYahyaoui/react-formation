@@ -1,13 +1,20 @@
-import { useContext } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router";
-import { BeerContext } from "../contexts/BeerContextProvider";
+import useBeersStore from "../store/useBeersStore";
+import { getBeers } from "../services/beers.service";
 
 const BeersList = () => {
-  const { beers, refetch, deleteBeerById } = useContext(BeerContext);
+  const { beers, setBeers, deleteBeer } = useBeersStore();
+
+  useEffect(() => {
+    if (beers.length) return;
+    /*  getBeers().then((response) => {
+      setBeers(response);
+    });*/
+  }, []);
 
   return (
     <div>
-      <button onClick={refetch}>refresh</button>
       <Link to="/beers/create">Create Beer</Link>
       <h1>Beers List</h1>
       {beers.map((beer) => (
@@ -17,7 +24,7 @@ const BeersList = () => {
           <p>{beer.degree}</p>
           <p>{beer.description}</p>
           <p>{beer.country}</p>
-          <button onClick={() => deleteBeerById(beer._id)}>delete</button>
+          <button onClick={() => deleteBeer(beer._id)}>delete</button>
         </div>
       ))}
     </div>

@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router";
-import { createBeer } from "../services/beers.service";
 import { Beer, BeerSchema } from "../schemas/beer.schema";
+import useBeersStore from "../store/useBeersStore";
 
 const CreateBeer = () => {
   const {
@@ -13,11 +13,12 @@ const CreateBeer = () => {
     resolver: zodResolver(BeerSchema),
   });
   const navigate = useNavigate();
+  const { addBeer } = useBeersStore();
 
   const onSubmit = (data: Omit<Beer, "_id">) => {
     console.log(data);
 
-    createBeer(data).then((response) => {
+    addBeer(data).then((response) => {
       console.log(response);
       navigate("/beers");
     });

@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
+import { ModalContext } from "../contexts/ModalContextProvider";
 
 const HomePage = () => {
   const navigation = useNavigate();
+  const { openModal } = useContext(ModalContext);
 
   useEffect(() => {
     const listener = (e: Event) => {
@@ -21,10 +23,17 @@ const HomePage = () => {
         minHeight: "200vh",
       }}
     >
+      <button
+        onClick={() => {
+          openModal("super modal", "contenu");
+        }}
+      >
+        display my super modal
+      </button>
       <h1>Home Page</h1>
       <a href="/planets">planets</a>
       <Link to="/planets">planets</Link>
-
+      <button>display modal</button>
       <button
         onClick={() => {
           navigation("/planets");

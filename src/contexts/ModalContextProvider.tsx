@@ -1,7 +1,13 @@
 import { createContext, useState } from "react";
 import ModalComponent from "../components/ModalComponent";
 
-export const ModalContext = createContext({});
+type ModalContextType = {
+  openModal: (title: string, content: string) => void;
+};
+
+export const ModalContext = createContext<ModalContextType>(
+  {} as ModalContextType
+);
 
 type ModalContextProviderProps = {
   children: React.ReactNode;
@@ -9,10 +15,12 @@ type ModalContextProviderProps = {
 
 const ModalContextProvider = ({ children }: ModalContextProviderProps) => {
   const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
-  const openModal = (title: string) => {
+  const openModal = (title: string, content: string) => {
     setTitle(title);
+    setContent(content);
     setIsOpen(true);
   };
 
@@ -21,10 +29,10 @@ const ModalContextProvider = ({ children }: ModalContextProviderProps) => {
       {children}
       <ModalComponent
         title={title}
-        content="This is a modal"
-        isOpen={true}
+        content={content}
+        isOpen={isOpen}
         onClose={() => {
-          console.log("close");
+          setIsOpen(false);
         }}
       ></ModalComponent>
     </ModalContext.Provider>

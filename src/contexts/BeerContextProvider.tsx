@@ -9,7 +9,7 @@ type BeerContextType = {
 };
 
 export const BeerContext = createContext<BeerContextType>(
-  {} as unknown as BeerContextType
+  {} as BeerContextType
 );
 
 type BeerContextProviderProps = {
