@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 export const BeerSchema = z.object({
-  _id: z.string(),
   name: z.string().min(2, "trop court").max(35, "trop long"),
   degree: z.coerce.number(),
   producer: z.string(),

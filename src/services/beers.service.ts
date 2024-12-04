@@ -10,3 +10,8 @@ export const getBeers = async () => {
   const data = await httpClient.get("/beers");
   return data.data;
 };
+
+export const deleteBeer = async (id: string) => {
+  const data = await httpClient.delete(`/beers/${id}`);
+  return data;
+};
