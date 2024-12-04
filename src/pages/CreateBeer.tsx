@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import httpClient from "../lib/http-client";
 import { useNavigate } from "react-router";
+import { createBeer } from "../services/beers.service";
 
 const BeerSchema = z.object({
   name: z.string().min(2, "trop court").max(15, "trop long"),
@@ -25,7 +25,8 @@ const CreateBeer = () => {
 
   const onSubmit = (data: BeerForm) => {
     console.log(data);
-    httpClient.post("/beers", data).then((response) => {
+
+    createBeer(data).then((response) => {
       console.log(response);
       navigate("/beers");
     });
