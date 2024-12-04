@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import HomePage from "../pages/HomePage";
 import PlanetList from "../pages/PlanetListClassico";
 import CreateBeer from "../pages/CreateBeer";
+import BeersList from "../pages/BeersList";
 
 const router = createBrowserRouter([
   {
@@ -13,8 +14,17 @@ const router = createBrowserRouter([
     element: <PlanetList></PlanetList>,
   },
   {
-    path: "/beers/create",
-    element: <CreateBeer></CreateBeer>,
+    path: "/beers",
+    children: [
+      {
+        path: "",
+        element: <BeersList></BeersList>,
+      },
+      {
+        path: "create",
+        element: <CreateBeer></CreateBeer>,
+      },
+    ],
   },
 ]);
 

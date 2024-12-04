@@ -1,29 +1,20 @@
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router";
 import { createBeer } from "../services/beers.service";
-
-const BeerSchema = z.object({
-  name: z.string().min(2, "trop court").max(15, "trop long"),
-  degree: z.coerce.number(),
-  producer: z.string(),
-  description: z.string(),
-});
-
-type BeerForm = z.infer<typeof BeerSchema>;
+import { Beer, BeerSchema } from "../schemas/beer.schema";
 
 const CreateBeer = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<BeerForm>({
+  } = useForm<Omit<Beer, "_id">>({
     resolver: zodResolver(BeerSchema),
   });
   const navigate = useNavigate();
 
-  const onSubmit = (data: BeerForm) => {
+  const onSubmit = (data: Omit<Beer, "_id">) => {
     console.log(data);
 
     createBeer(data).then((response) => {
@@ -44,6 +35,11 @@ const CreateBeer = () => {
         {errors.producer && <p>{errors.producer.message}</p>}
         <input placeholder="description" {...register("description")} />
         {errors.description && <p>{errors.description.message}</p>}
+        <select {...register("country")}>
+          <option value="France">France</option>
+          <option value="Belgium">Belgium</option>
+          <option value="Irlande">Irlande</option>
+        </select>
         <button>submit</button>
       </form>
     </div>
