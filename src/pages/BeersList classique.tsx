@@ -2,8 +2,6 @@ import { Link } from "react-router";
 import { deleteBeer, getBeers } from "../services/beers.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Beer } from "../schemas/beer.schema";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
 
 const BeersList = () => {
   const { data: beers } = useQuery<Beer[]>({
@@ -32,28 +30,20 @@ const BeersList = () => {
     },
   });
 
-  const actionBodyTemplate = (rowData: Beer) => {
-    return (
-      <div>
-        <Link to={`/beers/update/${rowData._id}`}>
-          <i className="pi pi-pencil" style={{ fontSize: "2.5rem" }}></i>
-        </Link>
-      </div>
-    );
-  };
-
   return (
     <div>
       <Link to="/beers/create">Create Beer</Link>
       <h1>Beers List</h1>
-      <DataTable value={beers} tableStyle={{ minWidth: "50rem" }}>
-        <Column field="degree" header="Code"></Column>
-        <Column field="name" header="Name"></Column>
-        <Column field="producer" header="Category"></Column>
-        <Column field="description" header="Quantity"></Column>
-        <Column field="country" header="Quantity"></Column>
-        <Column body={actionBodyTemplate} header="action"></Column>
-      </DataTable>
+      {beers?.map((beer) => (
+        <div key={beer._id}>
+          <h2>{beer.name}</h2>
+          <p>{beer.producer}</p>
+          <p>{beer.degree}</p>
+          <p>{beer.description}</p>
+          <p>{beer.country}</p>
+          <button onClick={() => mutation.mutate(beer._id)}>delete</button>
+        </div>
+      ))}
     </div>
   );
 };

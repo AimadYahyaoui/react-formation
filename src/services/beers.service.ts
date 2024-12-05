@@ -11,6 +11,11 @@ export const getBeers = async () => {
   return data.data;
 };
 
+export const getBeer = async (id: string) => {
+  const data = await httpClient.get(`/beers/${id}`);
+  return data;
+};
+
 const waitFor = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export const deleteBeer = async (id: string) => {

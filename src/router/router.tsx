@@ -1,10 +1,11 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, redirect } from "react-router";
 import HomePage from "../pages/HomePage";
 import PlanetList from "../pages/PlanetListClassico";
 import PlanetListQuery from "../pages/PlanetList";
 import CreateBeer from "../pages/CreateBeer";
 import BeersList from "../pages/BeersList";
 import Demo from "../pages/Demo";
+import { getBeer } from "../services/beers.service";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,19 @@ const router = createBrowserRouter([
         element: <CreateBeer></CreateBeer>,
       },
       {
-        path: "update/:id",
+        loader: async ({ params: { id } }) => {
+          if (id) {
+            try {
+              const data = await getBeer(id);
+              console.log(data);
+              return { beer: data.data };
+            } catch (error) {
+              redirect("/beers");
+            }
+          }
+          return {};
+        },
+        path: "update/:id?",
         element: <Demo></Demo>,
       },
     ],
