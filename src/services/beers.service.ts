@@ -11,7 +11,11 @@ export const getBeers = async () => {
   return data.data;
 };
 
+const waitFor = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 export const deleteBeer = async (id: string) => {
+  await waitFor(2000);
+  throw new Error("Error");
   const data = await httpClient.delete(`/beers/${id}`);
   return data;
 };

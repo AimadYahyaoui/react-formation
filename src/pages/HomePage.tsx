@@ -1,6 +1,7 @@
-import { useContext, useEffect } from "react";
+import { MouseEvent, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 import { ModalContext } from "../contexts/ModalContextProvider";
+import { Button } from "primereact/button";
 
 const HomePage = () => {
   const navigation = useNavigate();
@@ -17,12 +18,22 @@ const HomePage = () => {
     };
   }, []);
 
+  const customClick = (
+    e: MouseEvent<HTMLButtonElement, MouseEvent>,
+    value: string
+  ) => {
+    console.log(e);
+    console.log(value);
+  };
+
   return (
     <div
       style={{
         minHeight: "200vh",
       }}
     >
+      <button onClick={(e) => customClick(e, "toto")}>button</button>
+      <Button label="prime button" />
       <button
         onClick={() => {
           openModal("super modal", "contenu");
